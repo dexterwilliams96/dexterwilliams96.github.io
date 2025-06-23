@@ -9,9 +9,9 @@
       "annotations": [
         {
           "corpora_id": 1,
-          "description": "toulmin",
+          "annotation_description": "toulmin",
           "annotator_count": 3,
-          "annotator type": "expert",
+          "annotator_type": "expert",
           "agreement": 0.5,
           "agreement_interpretation": "moderate",
           "accessibility": "free",
