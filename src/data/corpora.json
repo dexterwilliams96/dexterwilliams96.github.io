@@ -2,7 +2,7 @@
   "corpora": [
     {
       "corpora_id": 1,
-      "name": "lots of texts",
+      "corpora_name": "lots of texts",
       "genre": "legal",
       "language": "English (en)",
       "document_types": "supreme court briefs",
