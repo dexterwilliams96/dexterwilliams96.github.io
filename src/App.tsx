@@ -9,11 +9,9 @@ import {
   Divider,
   List,
   ListItem,
-  ListItemText,
   Dialog,
   DialogContent,
   DialogTitle,
-  IconButton,
   Button,
   Grid,
   AppBar,
@@ -23,7 +21,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LanguageIcon from "@mui/icons-material/Language";
 import DescriptionIcon from "@mui/icons-material/Description";
-import CloseIcon from "@mui/icons-material/Close";
 import SchoolIcon from "@mui/icons-material/School";
 
 /**
@@ -163,7 +160,6 @@ function CitationText({ citation }: any) {
 
 export default function App() {
   const [openPdf, setOpenPdf] = useState<string | null>(null);
-  const [pdfTitle, setPdfTitle] = useState<string>("");
   const [openBibtex, setOpenBibtex] = useState<string | null>(null);
 
   const sectionRefs = {
@@ -225,11 +221,11 @@ export default function App() {
 
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Grid container spacing={6} alignItems="center" mb={10}>
-          <Grid item xs={12} md={4}>
+          <Grid>
             <Avatar src={profile.profileImage} sx={{ width: 180, height: 180 }} />
           </Grid>
 
-          <Grid item xs={12} md={8}>
+          <Grid>
             <Typography variant="h2" fontWeight={800} mb={2}>
               {profile.name}
             </Typography>
@@ -263,7 +259,7 @@ export default function App() {
 
           <Grid container spacing={3}>
             {researchInterests.map((interest) => (
-              <Grid item xs={12} sm={6} md={4} key={interest}>
+              <Grid key={interest}>
                 <Box sx={{ p: 3, borderTop: "3px solid rgba(255,255,255,0.2)" }}>
                   <Typography fontWeight={600}>{interest}</Typography>
                 </Box>
