@@ -1,119 +1,360 @@
-import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
+import { useState, useRef } from "react";
+import {
+  Avatar,
+  Box,
+  Container,
+  Typography,
+  Link,
+  Stack,
+  Card,
+  CardContent,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Button,
+  Paper,
+  AppBar,
+  Toolbar,
+  Grid,
+  Chip,
+} from "@mui/material";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import LanguageIcon from "@mui/icons-material/Language";
+import DescriptionIcon from "@mui/icons-material/Description";
+import CloseIcon from "@mui/icons-material/Close";
 
-import corp from "./data/corpora.json";
-import pap from "./data/papers.json";
+const profile = {
+  name: "Dr. Your Name",
+  title: "Assistant Professor of Something",
+  bio: "I study interesting things at the intersection of X and Y. My work focuses on Z. I am especially interested in A, B, and C.",
+  profileImage: "/profile.jpg",
+};
 
-interface Row {
-  id: number;
-  corpora_name: string;
-  paper_name: string;
-  authors: string;
-  date: string;
-  genre: string;
-  language: string;
-  document_types: string;
-  document_count: number;
-  annotation_description: string;
-  annotator_count: number;
-  annotator_type: string;
-  agreement: number;
-  agreement_interpretation: string;
-  accessibility: string;
-  corpora_link: string;
-  paper_link: string;
-}
-
-const columns = [
-  { field: "corpora_name", headerName: "Corpora Name", width: 200 },
-  { field: "paper_name", headerName: "Paper Name", width: 200 },
-  { field: "authors", headerName: "Authors", width: 200 },
-  { field: "date", headerName: "Date", width: 200 },
-  { field: "genre", headerName: "Genre", width: 200 },
-  { field: "language", headerName: "Language", width: 200 },
-  { field: "document_types", headerName: "Document Types", width: 200 },
-  { field: "document_count", headerName: "Document Count", width: 200 },
+const links = [
   {
-    field: "annotation_description",
-    headerName: "Annotation Description",
-    width: 200,
+    label: "GitHub",
+    url: "https://github.com/yourname",
+    icon: <GitHubIcon fontSize="small" />,
   },
-  { field: "annotator_count", headerName: "Annotator Count", width: 200 },
-  { field: "annotator_type", headerName: "Annotator Type", width: 200 },
-  { field: "agreement", headerName: "Agreement", width: 200 },
   {
-    field: "agreement_interpretation",
-    headerName: "Interpretation",
-    width: 200,
+    label: "LinkedIn",
+    url: "https://linkedin.com/in/yourname",
+    icon: <LinkedInIcon fontSize="small" />,
   },
-  { field: "accessibility", headerName: "Accessibility", width: 200 },
-  { field: "corpora_link", headerName: "Corpora Link", width: 200 },
-  { field: "paper_link", headerName: "Paper Link", width: 200 },
+  {
+    label: "University",
+    url: "https://university.edu/~yourname",
+    icon: <LanguageIcon fontSize="small" />,
+  },
 ];
 
-function App() {
-  const [loading] = useState(false);
-  const [rows, setRows] = useState<Row[]>([]);
+const cv = {
+  label: "Download CV",
+  file: "/cv.pdf",
+};
 
-  useEffect(() => {
-    for (const paper of pap.papers) {
-      console.log(paper);
-      for (const annotation of paper.annotations) {
-        const corpora = corp.corpora.find(
-          (i) => i.corpora_id === annotation.corpora_id,
-        );
-        if (corpora) {
-          setRows([
-            ...rows,
-            {
-              id: paper.paper_id,
-              corpora_name: corpora.corpora_name,
-              paper_name: paper.paper_name,
-              authors: paper.authors,
-              date: paper.date,
-              genre: corpora.genre,
-              language: corpora.language,
-              document_types: corpora.document_types,
-              document_count: corpora.document_count,
-              annotation_description: annotation.annotation_description,
-              annotator_count: annotation.annotator_count,
-              annotator_type: annotation.annotator_type,
-              agreement: annotation.agreement,
-              agreement_interpretation: annotation.agreement_interpretation,
-              accessibility: annotation.accessibility,
-              corpora_link: annotation.corpora_link,
-              paper_link: paper.paper_link,
-            },
-          ]);
-        }
-      }
-    }
-  }, []);
+const researchInterests = [
+  "Machine Learning",
+  "Computational Social Science",
+  "AI Ethics",
+  "Data Visualization",
+  "Human-AI Interaction",
+  "Network Science",
+];
+
+const news = [
+  { date: "2026", text: "Received NSF CAREER Award." },
+  { date: "2025", text: "Paper accepted to Top Conference." },
+];
+
+const teaching = [
+  "Intro to Machine Learning",
+  "Data Science Methods",
+  "Advanced Topics in AI",
+];
+
+const awards = [
+  "Best Paper Award - Conference 2025",
+  "University Teaching Excellence Award 2024",
+];
+
+const papers = [
+  {
+    title: "Paper Title One",
+    authors: "Your Name, Coauthor A, Coauthor B",
+    venue: "Conference / Journal, 2025",
+    pdf: "/papers/paper1.pdf",
+  },
+  {
+    title: "Paper Title Two",
+    authors: "Your Name, Coauthor C",
+    venue: "Conference / Journal, 2024",
+    pdf: "/papers/paper2.pdf",
+  },
+];
+
+export default function App() {
+  const [openPdf, setOpenPdf] = useState<string | null>(null);
+  const [pdfTitle, setPdfTitle] = useState<string>("");
+
+  const sectionRefs = {
+    research: useRef<HTMLDivElement>(null),
+    publications: useRef<HTMLDivElement>(null),
+    news: useRef<HTMLDivElement>(null),
+    teaching: useRef<HTMLDivElement>(null),
+    awards: useRef<HTMLDivElement>(null),
+  };
+
+  const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleOpenPdf = (file: string, title: string) => {
+    setOpenPdf(file);
+    setPdfTitle(title);
+  };
+
+  const handleClosePdf = () => {
+    setOpenPdf(null);
+    setPdfTitle("");
+  };
 
   return (
-    <Box style={{ height: 300, width: "100%" }}>
-      {loading ? (
-        <Skeleton />
-      ) : (
-        <Card variant="outlined">
-          <CardContent>
-            <Typography
-              gutterBottom
-              sx={{ color: "text.secondary", fontSize: 14 }}
-            >
-              Grouped by Corpora
-            </Typography>
-            <DataGrid rows={rows} columns={columns} />
-          </CardContent>
-        </Card>
-      )}
+    <Box
+      sx={{
+        minHeight: "100vh",
+        background:
+          "radial-gradient(circle at 20% 20%, rgba(59,130,246,0.08), transparent 40%), radial-gradient(circle at 80% 60%, rgba(168,85,247,0.08), transparent 40%), #020617",
+      }}
+    >
+      {/* Top Navigation */}
+      <AppBar position="sticky" color="transparent" elevation={0}>
+        <Toolbar sx={{ backdropFilter: "blur(10px)" }}>
+          <Typography sx={{ flexGrow: 1, fontWeight: 600 }}>
+            {profile.name}
+          </Typography>
+
+          <Stack direction="row" spacing={1}>
+            <Button color="inherit" onClick={() => scrollTo(sectionRefs.research)}>
+              Research
+            </Button>
+            <Button color="inherit" onClick={() => scrollTo(sectionRefs.publications)}>
+              Publications
+            </Button>
+            <Button color="inherit" onClick={() => scrollTo(sectionRefs.news)}>
+              News
+            </Button>
+            <Button color="inherit" onClick={() => scrollTo(sectionRefs.teaching)}>
+              Teaching
+            </Button>
+            <Button color="inherit" onClick={() => scrollTo(sectionRefs.awards)}>
+              Awards
+            </Button>
+          </Stack>
+        </Toolbar>
+      </AppBar>
+
+      <Container maxWidth="lg" sx={{ py: 6 }}>
+        {/* Profile */}
+        <Paper sx={{ p: 5, borderRadius: 4, mb: 6 }} elevation={6}>
+          <Stack direction={{ xs: "column", md: "row" }} spacing={5}>
+            <Avatar
+              src={profile.profileImage}
+              sx={{ width: 160, height: 160 }}
+            />
+
+            <Box>
+              <Typography variant="h3" fontWeight={700}>
+                {profile.name}
+              </Typography>
+              <Typography color="text.secondary" mb={2}>
+                {profile.title}
+              </Typography>
+              <Typography sx={{ maxWidth: 650, mb: 3 }}>
+                {profile.bio}
+              </Typography>
+
+              <Stack direction="row" spacing={2} flexWrap="wrap">
+                {links.map((link) => (
+                  <Button
+                    key={link.label}
+                    startIcon={link.icon}
+                    component={Link}
+                    href={link.url}
+                    target="_blank"
+                    variant="outlined"
+                  >
+                    {link.label}
+                  </Button>
+                ))}
+
+                <Button
+                  startIcon={<DescriptionIcon />}
+                  component={Link}
+                  href={cv.file}
+                  target="_blank"
+                  variant="contained"
+                >
+                  {cv.label}
+                </Button>
+              </Stack>
+            </Box>
+          </Stack>
+        </Paper>
+
+        {/* Research Interests */}
+        <Box ref={sectionRefs.research} mb={8}>
+          <Typography variant="h4" mb={3} fontWeight={600}>
+            Research Interests
+          </Typography>
+
+          <Grid container spacing={2}>
+            {researchInterests.map((interest) => (
+              <Grid item xs={12} sm={6} md={4} key={interest}>
+                <Paper sx={{ p: 3, borderRadius: 3 }} elevation={2}>
+                  <Typography fontWeight={500}>{interest}</Typography>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Publications */}
+        <Box ref={sectionRefs.publications} mb={8}>
+          <Typography variant="h4" mb={3} fontWeight={600}>
+            Publications
+          </Typography>
+
+          <Card sx={{ borderRadius: 4 }}>
+            <CardContent>
+              <List>
+                {papers.map((paper, idx) => (
+                  <ListItem
+                    key={paper.title}
+                    divider={idx !== papers.length - 1}
+                  >
+                    <ListItemText
+                      primary={
+                        <Stack direction="row" spacing={2} alignItems="center">
+                          <Typography fontWeight={600}>
+                            {paper.title}
+                          </Typography>
+
+                          <Button
+                            size="small"
+                            startIcon={<DescriptionIcon />}
+                            onClick={() =>
+                              handleOpenPdf(paper.pdf, paper.title)
+                            }
+                          >
+                            Preview
+                          </Button>
+
+                          <Button
+                            size="small"
+                            component={Link}
+                            href={paper.pdf}
+                            target="_blank"
+                          >
+                            PDF
+                          </Button>
+                        </Stack>
+                      }
+                      secondary={
+                        <>
+                          <Typography variant="body2">
+                            {paper.authors}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {paper.venue}
+                          </Typography>
+                        </>
+                      }
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </CardContent>
+          </Card>
+        </Box>
+
+        {/* News */}
+        <Box ref={sectionRefs.news} mb={8}>
+          <Typography variant="h4" mb={3} fontWeight={600}>
+            News & Updates
+          </Typography>
+
+          <Stack spacing={2}>
+            {news.map((n, i) => (
+              <Paper key={i} sx={{ p: 2, borderRadius: 3 }} elevation={2}>
+                <Stack direction="row" spacing={2}>
+                  <Chip label={n.date} />
+                  <Typography>{n.text}</Typography>
+                </Stack>
+              </Paper>
+            ))}
+          </Stack>
+        </Box>
+
+        {/* Teaching */}
+        <Box ref={sectionRefs.teaching} mb={8}>
+          <Typography variant="h4" mb={3} fontWeight={600}>
+            Teaching
+          </Typography>
+
+          <Stack spacing={2}>
+            {teaching.map((course) => (
+              <Paper key={course} sx={{ p: 2, borderRadius: 3 }} elevation={2}>
+                <Typography>{course}</Typography>
+              </Paper>
+            ))}
+          </Stack>
+        </Box>
+
+        {/* Awards */}
+        <Box ref={sectionRefs.awards} mb={8}>
+          <Typography variant="h4" mb={3} fontWeight={600}>
+            Awards & Recognition
+          </Typography>
+
+          <Stack spacing={2}>
+            {awards.map((award) => (
+              <Paper key={award} sx={{ p: 2, borderRadius: 3 }} elevation={2}>
+                <Typography>{award}</Typography>
+              </Paper>
+            ))}
+          </Stack>
+        </Box>
+      </Container>
+
+      {/* PDF Preview */}
+      <Dialog open={Boolean(openPdf)} onClose={handleClosePdf} maxWidth="lg" fullWidth>
+        <DialogTitle sx={{ display: "flex" }}>
+          <Box flexGrow={1}>{pdfTitle}</Box>
+          <IconButton onClick={handleClosePdf}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+
+        <DialogContent sx={{ height: "80vh" }}>
+          {openPdf && (
+            <iframe
+              src={openPdf}
+              width="100%"
+              height="100%"
+              style={{ border: "none" }}
+              title="PDF Preview"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }
 
-export default App;
