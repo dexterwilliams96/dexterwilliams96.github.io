@@ -67,18 +67,11 @@ const researchInterests = [
   "AI and Law",
 ];
 
-//const news = [
-  //{ date: "2024", text: "New collaboration started with external research group." },
-//];
 
 const teaching = [
   "Formal logic and discrete mathematics (University of Illinois Urbana-Champaign, Fall 2024 & Spring 2025)",
 ];
 
-//const awards = [
-//];
-
-/** Example Publications with BibTeX + Citation Info */
 
 const publications = {
   conferences: [
@@ -111,7 +104,7 @@ const publications = {
     citation: "Williams, D.,* & Schneider, J. (2026). Emotional Argumentation in Second Look. Talk at The 2026 Symposium of the Applied Rhetoric Collaborative.",
   },
   {
-    citation: "Williams, D.,* & Hatt, A. (2026). Don't Argue With Cops? . Poster at the University of Wisconsin-Madison May Day Tea 2026.",
+    citation: "Williams, D.,* & Hatt, A. (2026). Don't Argue With Cops? The harms of \"fighting words\". Poster at the University of Wisconsin-Madison May Day Tea 2026.",
     pdf: "/papers/DontArgueWithCops[Poster].pdf",
     link: "https://minds.wisc.edu/items/bd692419-212d-4e28-9b8b-a0f8bb0c31c0"
   },
