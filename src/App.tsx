@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import {
   Avatar,
   Box,
@@ -9,9 +9,6 @@ import {
   Divider,
   List,
   ListItem,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Button,
   Grid,
   AppBar,
@@ -34,8 +31,6 @@ const profile = {
   profileImage: "/profile.jpg",
 };
 
-/** Name used for bolding in author lists */
-const AUTHOR_NAME = "Dexter Williams";
 
 const links = [
   {
@@ -86,81 +81,54 @@ const teaching = [
 /** Example Publications with BibTeX + Citation Info */
 
 const publications = {
-  journals: [
-  ],
-
   conferences: [
-  ],
-
-  workshops: [
     {
-      citation: {
-        authors: "Heng Zheng, Dexter Williams, and Bertram Ludäscher",
-        year: "2025",
-        title: "Using LLMs to Model Arguments in U.S. Supreme Court Briefs: Preliminary Report",
-        venue: "International Workshop on Translating Natural Legal Language into Formal Representation (NLL2FR 2025)",
-      },
+      citation: "Williams, D.,* Liu, S., Stede, M., Wachsmuth, H., & Schneider, J. (2026). AMResources: Cataloging argument mining datasets. In M. Elaraby, A. Hautli-Janisz, J. Romberg, E. Musi, F. Ruggeri, & J. Lawrence (Eds.), Proceedings of the 13th Workshop on Argument Mining and Reasoning (pp. 52–58). Association for Computational Linguistics. https://doi.org/10.18653/v1/2026.argmining-1.5",
+      pdf: "/papers/ArgMining2026.pdf",
+      link: "https://doi.org/10.18653/v1/2026.argmining-1.5"
+    },
+    {
+      citation: "Williams, D.* (2026). That feels convincing: Assessing the quality of pathotic arguments. Argumentation in the Digital Society. Proceedings of the 5th European Conference on Argumentation (ECA 2025). Forthcoming.",
+      pdf: "/papers/ECA2025.pdf",
+    },
+    {
+      citation: "Williams, D.* (2026). Decorum in the forum: Emotional interactions in U.S. presidential press conferences. Arguing Democracy. Proceedings of the 2025 NCA/AFA Argumentation Conference (Alta). Forthcoming.",
+      pdf: "/papers/Alta2025.pdf",
+    },
+    {
+      citation: "Zheng, H., Williams, D.,* & Ludascher, B. (2025). Using LLMs to model arguments in U.S. Supreme Court briefs: Preliminary report. Proceedings of the International Workshop on Translating Natural Legal Language into Formal Representation (NLL2FR 2025).",
       pdf: "/papers/NLL2FR2025proceedings.pdf",
-      bibtex: `@inproceedings{Zheng2025,
-            title={Using {LLMs} to Model Arguments in {U}.{S}. Supreme Court Briefs: {P}reliminary Report},
-            author={Zheng, Heng and Williams, Dexter and Ludäscher, Bertram},
-            booktitle={Proceedings of the International Workshop on Translating Natural Legal Language into Formal Representation (NLL2FR 2025)},
-            year={2025}
-          }`,
+      link: "https://jurisinformaticscenter.github.io/NLL2FR2025/NLL2FR2025proceedings.pdf"
+    },
+    {
+      citation: "Zheng, H., Williams, D.,* & Ludäscher, B. (2025). Modeling U.S. Supreme Court briefs with computational argumentation. In R. Markovich, L. D. Caro, A. Rapp, & C. Schifanella (Eds.), Legal Knowledge and Information Systems. SAGE Publications. https://doi.org/10.3233/FAIA251631",
+      pdf: "/papers/JURIX2025proceedings.pdf",
+      link: "https://doi.org/10.3233/FAIA251631"
     },
   ],
-
-  other: [
-    {
-      citation: {
-        authors: "Heng Zheng, Dexter Williams, and Bertram Ludäscher",
-        year: "2025",
-        title: "Modeling U.S. Supreme Court Briefs with Computational Argumentation",
-        venue: "Thirty-eighth International Conference on Legal Knowledge and Information Systems (JURIX 2025)"
-      },
-      pdf: "/papers/JURIX2025proceedings.pdf",
-      bibtex: `@incollection{zheng_modeling_2025,
-            title = {Modeling {U}.{S}. Supreme Court Briefs with Computational Argumentation},
-            url = {https://ebooks.iospress.nl/doi/10.3233/FAIA251631},
-            doi = {10.3233/FAIA251631},
-            language = {en},
-            urldate = {2026-02-11},
-            booktitle = {Legal {Knowledge} and {Information} {Systems}},
-            publisher = {IOS Press},
-            author={Zheng, Heng and Williams, Dexter and Ludäscher, Bertram},
-            year = {2025},
-            doi = {10.3233/FAIA251631},
-            pages = {439--441},
-      }`,
-
-    }
-  ],
-};
-
-/** ---------- HELPERS ---------- */
-
-function formatAuthors(authors: string) {
-  return authors.split(" and ").map((a, i) => (
-    <span key={i}>
-      {a.trim() === AUTHOR_NAME ? <b>{a.trim()}</b> : a.trim()}
-      {i < authors.split(" and ").length - 1 ? ", " : ""}
-    </span>
-  ));
+  posters:  [
+  {
+    citation: "Williams, D.,* & Schneider, J. (2026). Emotional Argumentation in Second Look. Talk at The 2026 Symposium of the Applied Rhetoric Collaborative.",
+  },
+  {
+    citation: "Williams, D.,* & Hatt, A. (2026). Don't Argue With Cops? . Poster at the University of Wisconsin-Madison May Day Tea 2026.",
+    pdf: "/papers/DontArgueWithCops[Poster].pdf",
+    link: "https://minds.wisc.edu/items/bd692419-212d-4e28-9b8b-a0f8bb0c31c0"
+  },
+  {
+    citation: "Williams, D.* (2026). Computational Assessment of Pathotic Argumentation Quality. Online Handbook of Argumentation for AI, 5.",
+    pdf: "/papers/OHAAI_Vol_5.pdf",
+    link: "https://doi.org/10.5281/zenodo.18701005",
+  },
+  {
+    citation: "Williams, D.* (2024). Assessing the Quality of Pathotic Arguments. Poster at the 2024 iSchool Research Showcase at the University of Illinois Urbana-Champaign.",
+    pdf: "/papers/uiucposter.pdf"
+  }
+]
 }
 
-function CitationText({ citation }: any) {
-  return (
-    <Typography sx={{ lineHeight: 1.7 }}>
-      {formatAuthors(citation.authors)} ({citation.year}). {citation.title}. <i>{citation.venue}</i>.
-    </Typography>
-  );
-}
-
-/** ---------- COMPONENT ---------- */
 
 export default function App() {
-  const [openPdf, setOpenPdf] = useState<string | null>(null);
-  const [openBibtex, setOpenBibtex] = useState<string | null>(null);
 
   const sectionRefs = {
     research: useRef<HTMLDivElement>(null),
@@ -184,19 +152,21 @@ export default function App() {
         {items.map((paper: any, idx: number) => (
           <ListItem key={idx} divider={idx !== items.length - 1} sx={{ px: 0, py: 2, alignItems: "flex-start" }}>
             <Box flex={1}>
-              <CitationText citation={paper.citation} />
+              <Typography>{paper.citation}</Typography>
             </Box>
 
             <Stack direction="row" spacing={1}>
-              <Button size="small" onClick={() => setOpenPdf(paper.pdf)}>
-                Preview
-              </Button>
+              {paper.pdf && (
               <Button size="small" component={Link} href={paper.pdf} target="_blank">
                 PDF
               </Button>
-              <Button size="small" onClick={() => setOpenBibtex(paper.bibtex)}>
-                BibTeX
-              </Button>
+              )}
+              {paper.link && (
+                <Button size="small" component={Link} href={paper.link} target="_blank">
+                  Link
+                </Button>
+              )}
+
             </Stack>
           </ListItem>
         ))}
@@ -212,9 +182,7 @@ export default function App() {
 
           <Stack direction="row" spacing={2}>
             <Button color="inherit" onClick={() => scrollTo(sectionRefs.publications)}>Publications</Button>
-            {/*<Button color="inherit" onClick={() => scrollTo(sectionRefs.news)}>News</Button>*/}
             <Button color="inherit" onClick={() => scrollTo(sectionRefs.teaching)}>Teaching</Button>
-            {/*<Button color="inherit" onClick={() => scrollTo(sectionRefs.awards)}>Awards</Button>*/}
           </Stack>
         </Toolbar>
       </AppBar>
@@ -270,25 +238,9 @@ export default function App() {
 
         <Box ref={sectionRefs.publications} mb={10}>
           <Typography variant="h4" fontWeight={700} mb={4}>Publications</Typography>
-
-          {/*<PublicationList title="Journal Articles" items={publications.journals} />*/}
-          {/*<PublicationList title="Conference Papers" items={publications.conferences} />*/}
-          <PublicationList title="Workshop Papers" items={publications.workshops} />
-          <PublicationList title="Posters & Other" items={publications.other} />
+          <PublicationList title="Conference Papers" items={publications.conferences} />
+          <PublicationList title="Non-Refereed/Lightly Refereed Publications, Presentations & Posters" items={publications.posters} />
         </Box>
-
-        {/*<Box ref={sectionRefs.news} mb={10}>
-          <Typography variant="h4" fontWeight={700} mb={4}>News</Typography>
-
-          <Stack spacing={2}>
-            {news.map((n, i) => (
-              <Box key={i} sx={{ borderLeft: "3px solid rgba(255,255,255,0.3)", pl: 2 }}>
-                <Typography fontWeight={600}>{n.date}</Typography>
-                <Typography>{n.text}</Typography>
-              </Box>
-            ))}
-          </Stack>
-          </Box>*/}
 
         <Box ref={sectionRefs.teaching} mb={10}>
           <Typography variant="h4" fontWeight={700} mb={4}>Teaching</Typography>
@@ -299,40 +251,8 @@ export default function App() {
             ))}
           </Stack>
         </Box>
-
-        {/*<Box ref={sectionRefs.awards} mb={10}>
-          <Typography variant="h4" fontWeight={700} mb={4}>Awards & Recognition</Typography>
-
-          <Stack spacing={2}>
-            {awards.map((award) => (
-              <Typography key={award}>• {award}</Typography>
-            ))}
-          </Stack>
-          </Box>*/}
         </Container>
 
-      {/* PDF Preview */}
-      <Dialog open={Boolean(openPdf)} onClose={() => setOpenPdf(null)} maxWidth="lg" fullWidth>
-        <DialogTitle>
-          PDF Preview
-        </DialogTitle>
-
-        <DialogContent sx={{ height: "80vh" }}>
-          {openPdf && (
-            <iframe src={openPdf} width="100%" height="100%" style={{ border: "none" }} title="PDF Preview" />
-          )}
-        </DialogContent>
-      </Dialog>
-
-      {/* BibTeX Dialog */}
-      <Dialog open={Boolean(openBibtex)} onClose={() => setOpenBibtex(null)} maxWidth="md" fullWidth>
-        <DialogTitle>BibTeX</DialogTitle>
-        <DialogContent>
-          <Box component="pre" sx={{ whiteSpace: "pre-wrap", fontSize: 13 }}>
-            {openBibtex}
-          </Box>
-        </DialogContent>
-      </Dialog>
     </Box>
   );
 }
