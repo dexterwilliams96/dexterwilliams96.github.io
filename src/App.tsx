@@ -27,7 +27,7 @@ import SchoolIcon from "@mui/icons-material/School";
 const profile = {
   name: "Dexter Williams",
   title: "Information Science PhD Student | UW-Madison",
-  bio: "I am a second-year information science PhD student at the University of Wisconsin-Madison, advised by Professor Jodi Schneider. My research focuses on argument mining and computational argumentation, I am particularly interested in the role of emotion on argument quality and persuasion.",
+  bio: "I am a third-year information science PhD student at the University of Wisconsin-Madison, advised by Professor Jodi Schneider. My research focuses on argument mining and computational argumentation, I am particularly interested in the role of emotion on argument quality and persuasion.",
   profileImage: "/profile.jpg",
 };
 
