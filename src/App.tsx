@@ -91,7 +91,7 @@ const publications = {
   ],
   workshops: [
     {
-      citation: "Stade, C., Williams, D. (2026). Retraction without traction: Towards post-publication invalidation in open science infrastructure. Proceedings of the 6th International Workshop on Scientific Knowledge Representation (Sci-K).",
+      citation: "Stade, C., Williams, D.* (2026). Retraction without traction: Towards post-publication invalidation in open science infrastructure. Proceedings of the 6th International Workshop on Scientific Knowledge Representation (Sci-K).",
       pdf: "/papers/SciK2026.pdf",
       link: "https://ceur-ws.org/Vol-4291/paper14.pdf"
     },
