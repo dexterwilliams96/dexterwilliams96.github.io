@@ -76,11 +76,6 @@ const teaching = [
 const publications = {
   conferences: [
     {
-      citation: "Williams, D.,* Liu, S., Stede, M., Wachsmuth, H., & Schneider, J. (2026). AMResources: Cataloging argument mining datasets. In M. Elaraby, A. Hautli-Janisz, J. Romberg, E. Musi, F. Ruggeri, & J. Lawrence (Eds.), Proceedings of the 13th Workshop on Argument Mining and Reasoning (pp. 52–58). Association for Computational Linguistics. https://doi.org/10.18653/v1/2026.argmining-1.5",
-      pdf: "/papers/ArgMining2026.pdf",
-      link: "https://doi.org/10.18653/v1/2026.argmining-1.5"
-    },
-    {
       citation: "Williams, D.* (2026). That feels convincing: Assessing the quality of pathotic arguments. Argumentation in the Digital Society. Proceedings of the 5th European Conference on Argumentation (ECA 2025). Forthcoming.",
       pdf: "/papers/ECA2025.pdf",
     },
@@ -89,14 +84,26 @@ const publications = {
       pdf: "/papers/Alta2025.pdf",
     },
     {
-      citation: "Zheng, H., Williams, D.,* & Ludascher, B. (2025). Using LLMs to model arguments in U.S. Supreme Court briefs: Preliminary report. Proceedings of the International Workshop on Translating Natural Legal Language into Formal Representation (NLL2FR 2025).",
-      pdf: "/papers/NLL2FR2025proceedings.pdf",
-      link: "https://jurisinformaticscenter.github.io/NLL2FR2025/NLL2FR2025proceedings.pdf"
-    },
-    {
       citation: "Zheng, H., Williams, D.,* & Ludäscher, B. (2025). Modeling U.S. Supreme Court briefs with computational argumentation. In R. Markovich, L. D. Caro, A. Rapp, & C. Schifanella (Eds.), Legal Knowledge and Information Systems. SAGE Publications. https://doi.org/10.3233/FAIA251631",
       pdf: "/papers/JURIX2025proceedings.pdf",
       link: "https://doi.org/10.3233/FAIA251631"
+    },
+  ],
+  workshops: [
+    {
+      citation: "Stade, C., Williams, D. (2026). Retraction without traction: Towards post-publication invalidation in open science infrastructure. Proceedings of the 6th International Workshop on Scientific Knowledge Representation (Sci-K).",
+      pdf: "/papers/SciK2026.pdf",
+      link: "https://ceur-ws.org/Vol-4291/paper14.pdf"
+    },
+    {
+      citation: "Williams, D.,* Liu, S., Stede, M., Wachsmuth, H., & Schneider, J. (2026). AMResources: Cataloging argument mining datasets. In M. Elaraby, A. Hautli-Janisz, J. Romberg, E. Musi, F. Ruggeri, & J. Lawrence (Eds.), Proceedings of the 13th Workshop on Argument Mining and Reasoning (pp. 52–58). Association for Computational Linguistics. https://doi.org/10.18653/v1/2026.argmining-1.5",
+      pdf: "/papers/ArgMining2026.pdf",
+      link: "https://doi.org/10.18653/v1/2026.argmining-1.5"
+    },
+    {
+      citation: "Zheng, H., Williams, D.,* & Ludascher, B. (2025). Using LLMs to model arguments in U.S. Supreme Court briefs: Preliminary report. Proceedings of the International Workshop on Translating Natural Legal Language into Formal Representation (NLL2FR 2025).",
+      pdf: "/papers/NLL2FR2025proceedings.pdf",
+      link: "https://jurisinformaticscenter.github.io/NLL2FR2025/NLL2FR2025proceedings.pdf"
     },
   ],
   posters:  [
@@ -232,6 +239,7 @@ export default function App() {
         <Box ref={sectionRefs.publications} mb={10}>
           <Typography variant="h4" fontWeight={700} mb={4}>Publications</Typography>
           <PublicationList title="Conference Papers" items={publications.conferences} />
+          <PublicationList title="Workshop Papers" items={publications.workshops} />
           <PublicationList title="Non-Refereed/Lightly Refereed Publications, Presentations & Posters" items={publications.posters} />
         </Box>
 
